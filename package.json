@@ -6,6 +6,7 @@
 		"@babel/core": "^7.14.6",
 		"@babel/preset-react": "^7.14.5",
 		"babel-loader": "^8.2.2",
+		"css-loader": "^6.7.1",
 		"dotenv-webpack": "^7.0.3",
 		"mapbox-gl": "^2.3.1",
 		"react": "^18.2.0",
@@ -17,6 +18,7 @@
 		"webpack-cli": "^4.7.2"
 	},
 	"dependencies": {
+		"@reduxjs/toolkit": "^1.8.3",
 		"autoprefixer": "^10.4.8",
 		"axios": "^0.21.1",
 		"dotenv": "^10.0.0",
@@ -24,13 +26,11 @@
 		"nodemon": "^2.0.9",
 		"path": "^0.12.7",
 		"postcss": "^8.4.14",
-		"python-shell": "^3.0.1",
-		"tailwindcss": "^3.1.7"
+		"python-shell": "^3.0.1"
 	},
 	"scripts": {
 		"build": "webpack -w",
-		"build-tailwind": "npx tailwindcss -i ./src/client/input.css -o ./public/css/main.css --watch",
-		"build:dev": "npm run build -- --watch --mode=development & npm run build-tailwind",
+		"build:dev": "npm run build -- --watch --mode=development",
 		"heroku-postbuild": "webpack --config webpack.prod.js",
 		"seed": "node script/seed.js",
 		"start": "node src/server",
