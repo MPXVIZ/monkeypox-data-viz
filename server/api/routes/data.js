@@ -1,10 +1,10 @@
-const fetch = require('node-fetch');
 const router = require('express').Router();
-const getCommitHash = require('../../utils/getCommitHash').getCommitHash();
-module.exports = router;
-
-// This sets up a route to localhost:3000/random and goes off and hits
-// cat-fact.herokuapp.com/facts/random
+const {
+    upsertCommitHashToRedis,
+    getLatestCaseData,
+    getCommitHash,
+    updateRedisWithNewData,
+} = require('../middleware/updateRedisData');
 
 /**
  * @GET '/api/data'
@@ -17,17 +17,23 @@ module.exports = router;
  * - If they are the same, grab the data from Redis
  * - If they aren't the same, replace Redis data with udpated data and send back to client
  */
-router.get('/', async (req, res) => {
-    try {
-        const commitHash = await getCommitHash;
-        // console.log('commitHash -> ', commitHash);
-        const apiResponse = await fetch(
-            'https://raw.githubusercontent.com/globaldothealth/monkeypox/main/latest.json',
-        );
-        const apiResponseJson = await apiResponse.json();
-        res.status(200).send(apiResponseJson);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('Something went wrong');
-    }
-});
+
+router.get(
+    '/',
+    getCommitHash,
+    upsertCommitHashToRedis,
+    getLatestCaseData,
+    updateRedisWithNewData,
+    async (req, res) => {
+        try {
+            const monkeypoxCaseData = req.monkeypoxCaseData;
+            console.log('at the end');
+            res.status(200).send(monkeypoxCaseData);
+        } catch (err) {
+            console.log(err);
+            res.status(500).send('Something went wrong');
+        }
+    },
+);
+
+module.exports = router;
