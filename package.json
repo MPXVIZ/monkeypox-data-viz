@@ -43,9 +43,9 @@
 		"node-sass": "^6.0.1",
 		"nodemon": "^2.0.9",
 		"path": "^0.12.7",
-		"postcss": "^8.4.14",
 		"react-swipeable-views": "^0.14.0",
 		"sass-loader": "^13.0.2",
+		"simple-git": "^3.11.0",
 		"style-loader": "^3.3.1"
 	}
 }
