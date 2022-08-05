@@ -20,7 +20,7 @@ module.exports = router;
 router.get('/', async (req, res) => {
     try {
         const commitHash = await getCommitHash;
-
+        // console.log('commitHash -> ', commitHash);
         const apiResponse = await fetch(
             'https://raw.githubusercontent.com/globaldothealth/monkeypox/main/latest.json',
         );
