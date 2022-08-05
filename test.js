@@ -1,4 +1,5 @@
 const data = require('./data.json');
+import data from './data.json'
 citySet = new Set();
 countrySet = new Set();
 locationSet = new Set();
