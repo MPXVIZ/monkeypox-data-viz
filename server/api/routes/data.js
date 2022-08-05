@@ -25,8 +25,6 @@ router.get('/', async (req, res) => {
             'https://raw.githubusercontent.com/globaldothealth/monkeypox/main/latest.json',
         );
         const apiResponseJson = await apiResponse.json();
-        // await db.collection('collection').insertOne(apiResponseJson)
-        // console.log(apiResponseJson)
         res.status(200).send(apiResponseJson);
     } catch (err) {
         console.log(err);
