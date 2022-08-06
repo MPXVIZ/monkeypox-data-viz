@@ -7,7 +7,7 @@ const latestJsonPath = process.env.LATEST_JSON_PATH;
 const tsCountryCSV = process.env.TS_COUNTRY_CSV;
 const tsConfirmedCSV = process.env.TS_CONFIRMED_CSV;
 
- const getRecentCommitHash = async (req, res, next) => {
+const getRecentCommitHash = async (req, res, next) => {
     await simpleGit().listRemote([monkeypoxRepoPath], (err, data) => {
         try {
             // Get index of first tab as it will be the HEAD
@@ -22,7 +22,7 @@ const tsConfirmedCSV = process.env.TS_CONFIRMED_CSV;
     });
 };
 
- const upsertCommitHashToRedis = async (req, res, next) => {
+const upsertCommitHashToRedis = async (req, res, next) => {
     try {
         const client = req.redisClient;
         const commitHash = req.commitHash;
@@ -43,7 +43,7 @@ const tsConfirmedCSV = process.env.TS_CONFIRMED_CSV;
     }
 };
 
- const getLatestCaseData = async (req, res, next) => {
+const getLatestCaseData = async (req, res, next) => {
     try {
         const client = req.redisClient;
         const isNewHash = req.isNewHash;
@@ -67,7 +67,7 @@ const tsConfirmedCSV = process.env.TS_CONFIRMED_CSV;
     } catch (error) {}
 };
 
- const updateRedisWithNewData = async (req, res, next) => {
+const updateRedisWithNewData = async (req, res, next) => {
     try {
         if (!req.isNewHash) {
             console.log('its an oldhash');
