@@ -26,6 +26,7 @@ router.get(
     updateRedisWithNewData,
     async (req, res) => {
         try {
+            //todo check mpxcasedata with mpxcase type in TS
             const monkeypoxCaseData = req.monkeypoxCaseData;
             console.log('at the end');
             res.status(200).send(monkeypoxCaseData);
