@@ -1,13 +1,7 @@
-const express = require("express")
+const express = require('express');
+const dataRouter = require('./data.js');
+const router = express.Router();
 
-const router = express.Router()
+router.use('/data', dataRouter);
 
-router.use("/data", require("./data"))
-
-router.use((req, res, next) => {
-	const error = new Error("Not Found")
-	error.status = 404
-	next(err)
-})
-
-module.exports = router
+module.exports = router;

@@ -1,13 +1,13 @@
 import React from 'react';
-import Map from './components/Map';
+import Map from './components/map';
+import './style.scss';
 
-function App() {
+const App = () => {
     return (
         <div>
-            {/* <h1>Hello World</h1> */}
             <Map />
         </div>
     );
-}
+};
 
 export default App;

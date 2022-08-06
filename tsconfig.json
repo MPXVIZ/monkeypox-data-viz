@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "outDir": "./public",
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "isolatedModules": false,
+        "noEmit": false,
+        "allowJs": true,
+        "target": "es5",
+        "module": "CommonJS",
+        "skipLibCheck": true,
+        "jsx": "react",
+        "esModuleInterop": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "typeRoots": ["./server/types", "node_modules/@types"]
+    },
+    // "include": ["./server/**/*","./client/**/*"],
+    "exclude": ["node_modules"]
+}
