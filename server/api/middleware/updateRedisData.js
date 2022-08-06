@@ -1,12 +1,13 @@
-const fetch = require('node-fetch');
-const simpleGit = require('simple-git');
-require('dotenv').config();
+import dotenv from 'dotenv';
+import fetch from 'node-fetch';
+import simpleGit from 'simple-git';
+dotenv.config();
 const monkeypoxRepoPath = process.env.MONKEYPOX_REPO_PATH;
 const latestJsonPath = process.env.LATEST_JSON_PATH;
 const tsCountryCSV = process.env.TS_COUNTRY_CSV;
 const tsConfirmedCSV = process.env.TS_CONFIRMED_CSV;
 
-const getCommitHash = async (req, res, next) => {
+export const getCommitHash = async (req, res, next) => {
     await simpleGit().listRemote([monkeypoxRepoPath], (err, data) => {
         try {
             const indexOfHead = data.indexOf('\tHEAD'); // Get index of first tab as it will be the HEAD
@@ -19,7 +20,8 @@ const getCommitHash = async (req, res, next) => {
         }
     });
 };
-const upsertCommitHashToRedis = async (req, res, next) => {
+
+export const upsertCommitHashToRedis = async (req, res, next) => {
     try {
         const client = req.redisClient;
         const commitHash = req.commitHash;
@@ -36,7 +38,8 @@ const upsertCommitHashToRedis = async (req, res, next) => {
         console.error(error);
     }
 };
-const getLatestCaseData = async (req, res, next) => {
+
+export const getLatestCaseData = async (req, res, next) => {
     try {
         const client = req.redisClient;
         const isNewHash = req.isNewHash;
@@ -55,13 +58,12 @@ const getLatestCaseData = async (req, res, next) => {
             req.monkeypoxCaseData = redisResponse.map(mpCase => {
                 return JSON.parse(mpCase);
             });
-
         }
         next();
     } catch (error) {}
 };
 
-const updateRedisWithNewData = async (req, res, next) => {
+export const updateRedisWithNewData = async (req, res, next) => {
     try {
         if (!req.isNewHash) {
             console.log('its an oldhash');
@@ -103,11 +105,4 @@ const updateRedisWithNewData = async (req, res, next) => {
         }
         next();
     } catch (error) {}
-};
-
-module.exports = {
-    upsertCommitHashToRedis,
-    getLatestCaseData,
-    getCommitHash,
-    updateRedisWithNewData,
 };

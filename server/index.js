@@ -1,6 +1,9 @@
-const express = require('express');
-const path = require('path');
-const redis = require('redis');
+import dotenv from 'dotenv';
+import express from 'express';
+import path from 'path';
+import redis from 'redis';
+import { fileURLToPath } from 'url';
+import router from './api/routes/index.js';
 // Construct a schema, using GraphQL schema language
 // Provide type definitions and resolver functions for your schema fields
 
@@ -15,11 +18,14 @@ client.on('error', err => console.error('Redis Client Error: ', err));
 client.connect();
 // For Heroku - Only require dotenv when NODE_ENV is set to development
 if (process.env.NODE_ENV == 'development') {
-    require('dotenv').config({ silent: true });
+    dotenv.config({ silent: true });
 }
 
 //utilize express as middleware for the server
 //server.applyMiddleware({ app });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
@@ -37,7 +43,7 @@ app.get('/', (req, res) =>
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', require('./api/routes'));
+app.use('/api', router);
 app.use((err, req, res, next) => {
     if (process.env.NODE_ENV !== 'test') console.error(err.stack);
     res.status(err.status || 500).send(err.message || 'Internal server error');
@@ -47,4 +53,4 @@ app.listen(PORT, () =>
     console.log(`🚀 Server ready at http://localhost:${PORT}`),
 );
 
-module.exports = app;
+export default app;

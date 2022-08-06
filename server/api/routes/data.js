@@ -1,10 +1,12 @@
-const router = require('express').Router();
-const {
-    upsertCommitHashToRedis,
-    getLatestCaseData,
+import express from 'express';
+import {
     getCommitHash,
+    getLatestCaseData,
     updateRedisWithNewData,
-} = require('../middleware/updateRedisData');
+    upsertCommitHashToRedis,
+} from '../middleware/updateRedisData.js';
+
+const dataRouter = express.Router();
 
 /**
  * @GET '/api/data'
@@ -18,7 +20,7 @@ const {
  * - If they aren't the same, replace Redis data with udpated data and send back to client
  */
 
-router.get(
+dataRouter.get(
     '/',
     getCommitHash,
     upsertCommitHashToRedis,
@@ -37,4 +39,4 @@ router.get(
     },
 );
 
-module.exports = router;
+export default dataRouter;
