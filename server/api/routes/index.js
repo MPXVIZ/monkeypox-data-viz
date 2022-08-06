@@ -1,7 +1,7 @@
-import express from 'express';
-import dataRouter from './data.js';
+const express = require('express');
+const dataRouter = require('./data.js');
 const router = express.Router();
 
 router.use('/data', dataRouter);
 
-export default router;
+module.exports = router;

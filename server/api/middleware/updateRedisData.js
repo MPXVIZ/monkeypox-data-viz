@@ -1,19 +1,20 @@
-import dotenv from 'dotenv';
-import fetch from 'node-fetch';
-import simpleGit from 'simple-git';
+const dotenv = require('dotenv');
+const fetch = require('node-fetch');
+const simpleGit = require('simple-git');
 dotenv.config();
 const monkeypoxRepoPath = process.env.MONKEYPOX_REPO_PATH;
 const latestJsonPath = process.env.LATEST_JSON_PATH;
 const tsCountryCSV = process.env.TS_COUNTRY_CSV;
 const tsConfirmedCSV = process.env.TS_CONFIRMED_CSV;
 
-export const getCommitHash = async (req, res, next) => {
+ const getRecentCommitHash = async (req, res, next) => {
     await simpleGit().listRemote([monkeypoxRepoPath], (err, data) => {
         try {
-            const indexOfHead = data.indexOf('\tHEAD'); // Get index of first tab as it will be the HEAD
+            // Get index of first tab as it will be the HEAD
+            const indexOfHead = data.indexOf('\tHEAD');
 
-            req.commitHash = data.substring(0, indexOfHead); // Grab the substring of the hash
-
+            // Grab the substring of the hash
+            req.commitHash = data.substring(0, indexOfHead);
             next();
         } catch (error) {
             console.error(err);
@@ -21,7 +22,7 @@ export const getCommitHash = async (req, res, next) => {
     });
 };
 
-export const upsertCommitHashToRedis = async (req, res, next) => {
+ const upsertCommitHashToRedis = async (req, res, next) => {
     try {
         const client = req.redisClient;
         const commitHash = req.commitHash;
@@ -29,6 +30,9 @@ export const upsertCommitHashToRedis = async (req, res, next) => {
         req.isNewHash = redisHash !== commitHash;
         if (req.isNewHash) {
             await client.set('SHA_HASH', commitHash, {
+                EX: req.redisExpiration,
+            });
+            await client.set('LAST_UPDATED', Date.now().toString(), {
                 EX: req.redisExpiration,
             });
         }
@@ -39,7 +43,7 @@ export const upsertCommitHashToRedis = async (req, res, next) => {
     }
 };
 
-export const getLatestCaseData = async (req, res, next) => {
+ const getLatestCaseData = async (req, res, next) => {
     try {
         const client = req.redisClient;
         const isNewHash = req.isNewHash;
@@ -63,7 +67,7 @@ export const getLatestCaseData = async (req, res, next) => {
     } catch (error) {}
 };
 
-export const updateRedisWithNewData = async (req, res, next) => {
+ const updateRedisWithNewData = async (req, res, next) => {
     try {
         if (!req.isNewHash) {
             console.log('its an oldhash');
@@ -105,4 +109,11 @@ export const updateRedisWithNewData = async (req, res, next) => {
         }
         next();
     } catch (error) {}
+};
+
+module.exports = {
+    getRecentCommitHash,
+    upsertCommitHashToRedis,
+    getLatestCaseData,
+    updateRedisWithNewData,
 };

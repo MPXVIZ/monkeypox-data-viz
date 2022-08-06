@@ -1,10 +1,10 @@
-import express from 'express';
-import {
-    getCommitHash,
+const express = require('express');
+const {
+    getRecentCommitHash,
     getLatestCaseData,
     updateRedisWithNewData,
     upsertCommitHashToRedis,
-} from '../middleware/updateRedisData.js';
+} = require('../middleware/updateRedisData.js');
 
 const dataRouter = express.Router();
 
@@ -12,17 +12,11 @@ const dataRouter = express.Router();
  * @GET '/api/data'
  * @since 0.1v
  * @desc Get the list of ALL monkeypox cases
- *
- * Steps:
- * - Get commit hash from globaldothealth/monkeypox github repo
- * - Check Redis if most recent commit hash is the same
- * - If they are the same, grab the data from Redis
- * - If they aren't the same, replace Redis data with udpated data and send back to client
  */
 
 dataRouter.get(
     '/',
-    getCommitHash,
+    getRecentCommitHash,
     upsertCommitHashToRedis,
     getLatestCaseData,
     updateRedisWithNewData,
@@ -39,4 +33,4 @@ dataRouter.get(
     },
 );
 
-export default dataRouter;
+module.exports = dataRouter;

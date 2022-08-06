@@ -1,13 +1,13 @@
-import Dotenv from 'dotenv-webpack';
-import path from 'path';
+const Dotenv = require('dotenv-webpack');
+const path = require('path');
 
-import { fileURLToPath } from 'url';
+// const { fileURLToPath } = require('url');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-export default {
-    entry: ['./client/index.js'],
+module.exports = {
+    entry: ['./client/index.tsx'],
     mode: 'development',
     output: {
         path: __dirname,
@@ -20,9 +20,23 @@ export default {
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)$/,
-                loader: 'ts-loader',
+                test: /\.tsx?$/,
                 exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                '@babel/preset-env',
+                                '@babel/preset-react',
+                                '@babel/preset-typescript',
+                            ],
+                        },
+                    },
+                    {
+                        loader: 'ts-loader',
+                    },
+                ],
             },
             {
                 test: /\.(js|jsx)$/,

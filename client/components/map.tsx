@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import mapboxgl from '!mapbox-gl';
 import axios from 'axios';
+import mapboxgl from 'mapbox-gl';
 
 export default function Map() {
     // dotenv-webpack gets token from environment variable
-    mapboxgl.accessToken = process.env.MAPBOX_TOKEN;
+    mapboxgl.accessToken = process.env.MAPBOX_TOKEN || '';
 
     const defaultLng = 0.3276;
     const defaultLat = 25.5072;
     const defaultZoom = 1.42;
-    const mapContainer = useRef(null);
-    const map = useRef(null);
+    const mapContainer: any = useRef(null);
+    const map: any = useRef(null);
     const [lng, setLng] = useState(defaultLng);
     const [lat, setLat] = useState(defaultLat);
     const [zoom, setZoom] = useState(defaultZoom);
@@ -38,7 +38,7 @@ export default function Map() {
             console.log(error);
         }
     }
-    const parse = data => {
+    const parse = (data: any) => {
         console.log('parsing data:', data);
         // return data.map((monkeypoxCase) => {
         // 	if (monkeypoxCase.city) {
