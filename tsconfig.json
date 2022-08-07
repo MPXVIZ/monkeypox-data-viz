@@ -17,7 +17,7 @@
         "sourceMap": true,
         "moduleResolution": "Node",
         "resolveJsonModule": true,
-        "typeRoots": ["./server/types", "node_modules/@types"]
+        "typeRoots": ["./src/server/types", "node_modules/@types"]
     },
     // "include": ["./server/**/*","./client/**/*"],
     "exclude": ["node_modules"]
