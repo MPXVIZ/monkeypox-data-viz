@@ -4,7 +4,6 @@
     "description": "",
     "main": "index.ts",
     "scripts": {
-        "tsc": "tsc",
         "build": "webpack -w",
         "build:dev": "npm run build -- --watch --mode=development",
         "heroku-postbuild": "webpack --config webpack.prod.js",
