@@ -6,7 +6,7 @@ import apiRoutes from '../../constants/api-routes';
 /**
  * This component is the main timeline globe. It uses the confirmed country cases
  */
-export default function Map() {
+function Map() {
     // dotenv-webpack gets token from environment variable
     mapboxgl.accessToken = process.env.MAPBOX_TOKEN || '';
 
@@ -60,3 +60,4 @@ export default function Map() {
         </section>
     );
 }
+export default Map;

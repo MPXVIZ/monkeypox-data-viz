@@ -27,7 +27,7 @@ if (process.env.NODE_ENV == 'development') {
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 
 app.use(function (req: any, res: any, next: any) {
     req.redisClient = client;
@@ -36,7 +36,7 @@ app.use(function (req: any, res: any, next: any) {
 });
 
 app.get('/', (req: any, res: any) =>
-    res.sendFile(path.join(__dirname, '..', 'public/index.html')),
+    res.sendFile(path.join(__dirname, '..', '..', 'public/index.html')),
 );
 
 // body-parsing middleware

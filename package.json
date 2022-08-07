@@ -9,8 +9,8 @@
         "build:dev": "npm run build -- --watch --mode=development",
         "heroku-postbuild": "webpack --config webpack.prod.js",
         "seed": "node script/seed.js",
-        "start": "node server",
-        "start-server": "JWT=shh nodemon server/index.ts -e html,js,ts,scss --ignore public --ignore client",
+        "start": "node src/server",
+        "start-server": "JWT=shh nodemon src/server/index.ts -e html,js,ts,scss --ignore public --ignore src/client",
         "start:dev": "npm run build:dev & npm run start-server",
         "start:dev:logger": "LOGGING=true npm run start:dev",
         "start:dev:seed": "SEED=true npm run start:dev"

@@ -7,7 +7,7 @@ const path = require('path');
 // const __dirname = path.dirname(__filename);
 
 module.exports = {
-    entry: ['./client/index.tsx'],
+    entry: ['./src/client/index.tsx'],
     mode: 'development',
     output: {
         path: __dirname,
