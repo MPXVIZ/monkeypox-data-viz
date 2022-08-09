@@ -8,12 +8,7 @@ const {
 
 const dataRouter = express.Router();
 
-/**
- * @GET '/api/data'
- * @since 0.1v
- * @desc Get the list of ALL monkeypox cases
- */
-
+//GET '/api/data'
 dataRouter.get(
     '/',
     getRecentCommitHash,

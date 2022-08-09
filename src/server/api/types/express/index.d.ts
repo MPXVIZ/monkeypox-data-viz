@@ -1,5 +1,4 @@
 // const express = require( 'express');
-// const redis = require( 'redis');
 // declare global {
 //     namespace Express {
 //         interface Request {
