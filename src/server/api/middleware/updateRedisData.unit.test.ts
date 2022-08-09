@@ -10,7 +10,7 @@ describe('updateRedisAndGetMPXData', () => {
  })
 describe('getRecentCommitHash', () => {
     it.todo('should get the most recent hash');
-    it.todo('should store the hash into the request');
+    it.todo('should return a Promise<string>');
 });
 describe('upsertCommitHashToRedis', () => {
     it.todo('should check to see if a hash exists in redis');

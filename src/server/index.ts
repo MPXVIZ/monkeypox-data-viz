@@ -1,14 +1,11 @@
-import { IGetRedisInfoRequest } from './api/interfaces/IGetRedisInfoRequest';
+import { RedisRequest } from './api/types/request';
 
 const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
-const redis = require('redis');
-// import { fileURLToPath } from 'url';
-const router = require('./api/routes/index.js');
+const router = require('./api/routes/index');
 
-// Construct a schema, using GraphQL schema language
-// Provide type definitions and resolver functions for your schema fields
+const { createClient } = require('redis');
 
 const PORT = process.env.PORT || 8000;
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
@@ -18,7 +15,7 @@ const DEFAULT_REDIS_EXPIRATION = process.env.DEFAULT_REDIS_EXPIRATION || 10800;
 const app = express();
 
 // initiate redis client
-const client: any = redis.createClient({ url: REDIS_URL });
+const client: any = createClient({ url: REDIS_URL });
 client.on('error', (err: any) => console.error('Redis Client Error: ', err));
 client.connect();
 
@@ -32,7 +29,8 @@ if (process.env.NODE_ENV == 'development') {
 
 app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 
-app.use(function (req: IGetRedisInfoRequest, res: any, next: any) {
+// Create Redis Client
+app.use(function (req: RedisRequest, res: any, next: any) {
     req.redisClient = client;
     req.redisExpiration = DEFAULT_REDIS_EXPIRATION;
     next();

@@ -1,12 +1,19 @@
 import React from 'react';
-import Map from './components/map';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import WorldTimeline from './components/WorldTimeline';
 import './style.scss';
 
 const App = () => {
     return (
-        <div>
-            <Map />
-        </div>
+        <Router>
+            <Switch>
+                <Route
+                    exact
+                    path="/"
+                    component={WorldTimeline}
+                ></Route>
+            </Switch>
+        </Router>
     );
 };
 
