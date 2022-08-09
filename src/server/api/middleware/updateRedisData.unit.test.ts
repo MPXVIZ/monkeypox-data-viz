@@ -1,9 +1,9 @@
-const {
-    getRecentCommitHash,
-    upsertCommitHashToRedis,
-    getLatestCaseData,
-    updateRedisWithNewData,
-} = require('./updateRedisData');
+// const {
+//     getRecentCommitHash,
+//     upsertCommitHashToRedis,
+//     getLatestCaseData,
+//     updateRedisWithNewData,
+// } = require('./updateRedisData');
 describe('updateRedisAndGetMPXData', () => {
     it.todo('should upsert redis with all cases');
     it.todo('should pass cases to request');
