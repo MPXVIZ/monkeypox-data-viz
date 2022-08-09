@@ -1,9 +1,12 @@
+import { IGetRedisInfoRequest } from './api/interfaces/IGetRedisInfoRequest';
+
 const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
 const redis = require('redis');
 // import { fileURLToPath } from 'url';
 const router = require('./api/routes/index.js');
+
 // Construct a schema, using GraphQL schema language
 // Provide type definitions and resolver functions for your schema fields
 
@@ -13,9 +16,12 @@ const DEFAULT_REDIS_EXPIRATION = process.env.DEFAULT_REDIS_EXPIRATION || 10800;
 
 // initiate server
 const app = express();
-const client = redis.createClient({ url: REDIS_URL });
+
+// initiate redis client
+const client: any = redis.createClient({ url: REDIS_URL });
 client.on('error', (err: any) => console.error('Redis Client Error: ', err));
 client.connect();
+
 // For Heroku - Only require dotenv when NODE_ENV is set to development
 if (process.env.NODE_ENV == 'development') {
     dotenv.config();
@@ -24,12 +30,9 @@ if (process.env.NODE_ENV == 'development') {
 //utilize express as middleware for the server
 //server.applyMiddleware({ app });
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
-
 app.use(express.static(path.join(__dirname, '..', '..', 'public')));
 
-app.use(function (req: any, res: any, next: any) {
+app.use(function (req: IGetRedisInfoRequest, res: any, next: any) {
     req.redisClient = client;
     req.redisExpiration = DEFAULT_REDIS_EXPIRATION;
     next();

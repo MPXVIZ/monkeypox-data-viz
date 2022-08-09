@@ -27,8 +27,8 @@ const upsertCommitHashToRedis = async (req, res, next) => {
         const client = req.redisClient;
         const commitHash = req.commitHash;
         const redisHash = await client.get('SHA_HASH');
-        req.isNewHash = redisHash !== commitHash;
         if (req.isNewHash) {
+            req.isNewHash = redisHash !== commitHash;
             await client.set('SHA_HASH', commitHash, {
                 EX: req.redisExpiration,
             });
@@ -49,16 +49,10 @@ const getLatestCaseData = async (req, res, next) => {
         const isNewHash = req.isNewHash;
 
         if (isNewHash) {
-            console.log('get data from repo');
             const apiResponse = await fetch(latestJsonPath);
-
             req.monkeypoxCaseData = await apiResponse.json();
-
-            next();
         } else {
-            console.log('get data from redis');
             const redisResponse = await client.hVals('MONKEYPOX_CASE_DATA');
-
             req.monkeypoxCaseData = redisResponse.map(mpCase => {
                 return JSON.parse(mpCase);
             });
