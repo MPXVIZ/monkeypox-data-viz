@@ -1,9 +1,9 @@
 import React from 'react';
-import Map from '../components/WorldTimeline';
+import WorldTimeline from '../components/WorldTimeline';
 function Main() {
     return (
         <div>
-            <Map />
+            <WorldTimeline />
         </div>
     );
 }
