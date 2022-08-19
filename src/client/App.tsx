@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
-import WorldTimeline from './components/WorldTimeline';
+// import WorldTimeline from './components/WorldTimeline';
+import Main from './pages/Main';
+
 import './style.scss';
 
 const App = () => {
@@ -10,7 +12,7 @@ const App = () => {
                 <Route
                     exact
                     path="/"
-                    component={WorldTimeline}
+                    component={Main}
                 ></Route>
             </Switch>
         </Router>
