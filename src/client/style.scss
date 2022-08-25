@@ -28,6 +28,17 @@ nav {
     border-radius: 10px;
 }
 
+#links {
+    display:flex;
+    justify-content: space-between;
+
+}
+
 ul {
     list-style-type: none;
+}
+
+li {
+    margin-left: 1rem;
+    display:inline;
 }
