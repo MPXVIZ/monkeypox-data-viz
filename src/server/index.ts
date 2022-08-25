@@ -36,7 +36,7 @@ app.use(function (req: RedisRequest, res: any, next: any) {
     next();
 });
 
-app.get('/', (req: any, res: any) =>
+app.get('/*', (req: any, res: any) =>
     res.sendFile(path.join(__dirname, '..', '..', 'public/index.html')),
 );
 
