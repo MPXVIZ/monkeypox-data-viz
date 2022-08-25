@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     return (
@@ -7,8 +8,9 @@ function Navbar() {
                 MonkeyPox Progression Map
             </h1>
             <ul>
-                <li>Home</li>
-                <li>About</li>
+                
+                <Link to="/"><li>Home</li></Link>
+                <Link to="/about"><li>About</li></Link>
                 <li>Sources</li>
             </ul>
         </nav>
